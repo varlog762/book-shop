@@ -1,3 +1,94 @@
 * {
     box-sizing: border-box;
 }
+
+h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 1200px;
+}
+
+.header-main {
+    background-color: #393280;
+
+    .header-content-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+
+        .header-title {
+            font-family: Arimo, sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 27px;
+            letter-spacing: 0.02em;
+            color: #FFFFFF;
+        }
+
+        .header-nav {
+            padding-top: 3px;
+
+            .header-nav-list{
+                width: 140px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .header-list-item{
+                    display: block;
+                    width: 20px;
+                    height: 20px;
+
+                    .header-list-item-link {
+                        display: block;
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                    .header-list-item-link:hover {
+                        cursor: pointer;
+                    }
+
+                    .facebook {
+                        background: url(/assets/icons/facebook.svg) no-repeat center center;
+                    }
+
+                    .instagram {
+                        background: url(/assets/icons/insta.svg) no-repeat center center;
+                    }
+
+                    .linkedin {
+                        background: url(/assets/icons/linkedin.svg) no-repeat center center;
+                    }
+
+                    .twitter {
+                        background: url(/assets/icons/twitter.svg) no-repeat center center;
+                    }
+
+                    .blogger {
+                        background: url(/assets/icons/blogger.svg) no-repeat center center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.main-content {
+    margin: 0 auto;
+}
+
+.footer-main {
+    margin: 0 auto;
+}

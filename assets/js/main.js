@@ -14,7 +14,6 @@ const userAccountTools = createAndInsertElement('ul', 'user-account-tools', user
 
 //User Menu:
 
-// const userAccountMenu = userAccountContainer.firstElementChild.nextElementSibling;
 userAccountMenu.append(document.createElement('ul'));
 userAccountMenu.firstElementChild.classList.add('user-account-menu-list');
 
@@ -48,12 +47,14 @@ for (let i = 0; i < 3; i++) {
 }
 
 //New Release Books:
-
 const newBooksSection = createAndInsertElement('section', 'new-books', mainElement, 'append');
 
 const newBooksSectionWrapper = createAndInsertElement('div', 'wrapper', newBooksSection, 'append');
 
 createAndInsertElement('p', 'new-books-description', newBooksSectionWrapper, 'append', 'Some quality items');
 createAndInsertElement('h2', 'new-books-title', newBooksSectionWrapper, 'append', 'New Release Books');
-createAndInsertElement('div', 'new-books-container', newBooksSectionWrapper, 'append');
+const booksContainer = createAndInsertElement('div', 'new-books-container', newBooksSectionWrapper, 'append');
 
+// getBooks();
+
+addBooksButtons();

@@ -268,6 +268,126 @@ a {
             text-transform: capitalize;
             color: #393280;            
         }
+
+        .new-books-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .book {
+                width: 326px;
+
+                .book-cover-container {
+                    position: relative;
+                    margin-bottom: 24px;
+                    padding: 54px 49px;
+                    width: 100%;
+                    height: 438px;
+                    background: #FFFFFF;
+                    border: 1px solid #EAE8DF;
+                    border-radius: 5px;
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+                    overflow: hidden;
+
+
+                    .book-cover {
+                        display: block;
+                        width: 100%;
+                        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+                    }
+
+                    .to-cart {
+                        padding: 15px 0;
+                        top: 310px;
+                        left: -257px;
+                        position: absolute;
+                        width: 257px;
+                        height: 50px;
+                        font-family: $a-font;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 19px;
+                        text-align: center;
+                        letter-spacing: 0.14em;
+                        text-transform: uppercase;
+                        color: #FFFFFF; 
+                        background-color: #ED553B;
+                        transition: left 0.3s;                 
+                    }
+
+                    .more-info {
+                        padding: 15px 0;
+                        top: 370px;
+                        left: -257px;
+                        position: absolute;
+                        width: 257px;
+                        height: 50px;
+                        font-family: $a-font;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 19px;
+                        text-align: center;
+                        letter-spacing: 0.14em;
+                        text-transform: uppercase;
+                        color: #FFFFFF; 
+                        background-color: #393280;
+                        transition: left 0.3s 0.2s; 
+                    }
+
+                    .book-hover {
+                        left: 0;
+                    }
+
+                    .book-hover:hover {
+                        cursor: pointer;
+                    }
+
+                    .book-hover:active {
+                        color: #888888;
+                    }
+                }
+
+                .book-name {
+                    margin-bottom: 11px;
+                    font-family: $a-font;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 22px;
+                    line-height: 27px;
+                    text-align: center;
+                    text-transform: capitalize;
+                    color: #393280;
+                }
+
+                .book-author {
+                    margin-bottom: 21px;
+                    font-family: $a-font;
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 17px;
+                    text-align: center;
+                    letter-spacing: 0.02em;
+                    text-transform: capitalize;
+                    color: #888888;                    
+                }
+
+                .book-price {
+                    margin-bottom: 57px;
+                    font-family: $a-font;
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 18px;
+                    line-height: 22px;
+                    text-align: center;
+                    letter-spacing: 0.02em;
+                    text-transform: capitalize;
+                    color: #ED553B;                    
+                }
+            }
+        }
     }
 }
 

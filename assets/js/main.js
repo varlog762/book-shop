@@ -10,7 +10,7 @@ const userAccountContainer = createAndInsertElement('div', 'user-account-contain
 
 const userAccountLogo = createAndInsertElement('div', 'user-account-logo', userAccountContainer, 'append');
 const userAccountMenu = createAndInsertElement('nav', 'user-account-menu', userAccountContainer, 'append');
-const userAccountTools = createAndInsertElement('ul', 'user-account-tools', userAccountContainer, 'append');
+const userAccountTools = createAndInsertElement('div', 'cart-container', userAccountContainer, 'append');
 
 //User Menu:
 
@@ -31,22 +31,38 @@ for (let i = 0; i < userAccountMenuItemsCollection.length; i++) {
     userAccountMenuItemsCollection[i].lastChild.setAttribute('href', '#');
 }
 
-//User Tools:
+//Cart Element:
 
-for (let i = 0; i < 3; i++) {
-    createAndInsertElement('li', 'user-account-tools-item', userAccountTools, 'append');
-    createAndInsertElement('a', `user-account-tools-item-link`, userAccountTools.lastChild, 'append');
-}
+const cartElement = userAccountContainer.querySelector('.cart-container');
 
-const userAccToolsItemsLinksCollection = userAccountTools.children;
+const cartElementButton = createAndInsertElement('button', 'cart-button', cartElement, 'append'),
+    cartElementNum = createAndInsertElement('div', 'cart-number', cartElement, 'append', cart.numItemsInCart),
+    cartElementPopup = createAndInsertElement('div', 'cart-popup', cartElement, 'append');
 
-for (let i = 0; i < 3; i++) {
-    const userAccountToolsStylesArray = ['user-settings', 'cart', 'favorite'];
-    userAccToolsItemsLinksCollection[i].firstElementChild.classList.add(userAccountToolsStylesArray[i]);
-    userAccToolsItemsLinksCollection[i].firstElementChild.setAttribute('href', '#');
-}
+cartElementButton.setAttribute('type', 'button');
+
+//Cart Popup:
+
+const cartElementPopupContainer = createAndInsertElement('div', 'cart-popup-container', cartElementPopup, 'append');
+
+const cartElementPopupTitle = createAndInsertElement('h2', 'cart-popup-title', cartElementPopupContainer, 'append', 'Shopping Cart'),
+    cartElementPopupItemsContainer = createAndInsertElement('div', 'cart-popup-items-container', cartElementPopupContainer, 'append'),
+    cartElementPopupDownContainer = createAndInsertElement('div', 'cart-popup-down-container', cartElementPopupContainer, 'append'),
+    cartElementPopupTotal = createAndInsertElement('div', 'cart-popup-total-cost', cartElementPopupDownContainer, 'append'),
+    cartEmpty = createAndInsertElement('div', 'cart-empty', cartElementPopupItemsContainer, 'append', 'Your Cart is Empty.'),
+    cartElementPopupCheckoutButton = createAndInsertElement('button', 'cart-popup-checkout-button', cartElementPopupDownContainer, 'append', 'Checkout'),
+    cartElementPopupCloseButton = createAndInsertElement('button', 'cart-popup-close-button', cartElementPopupContainer, 'append');
+
+// console.log(cartElementPopupDownContainer);
+
+cartElementPopupCheckoutButton.setAttribute('type', 'button');
+cartElementPopupCloseButton.setAttribute('type', 'button');
+
+cartElementButton.addEventListener('click', () => cartElementPopup.classList.add('cart-popup-visible'));
+cartElementPopupCloseButton.addEventListener('click', () => cartElementPopup.classList.remove('cart-popup-visible'));
 
 //New Release Books:
+
 const newBooksSection = createAndInsertElement('section', 'new-books', mainElement, 'append');
 
 const newBooksSectionWrapper = createAndInsertElement('div', 'wrapper', newBooksSection, 'append');
@@ -57,4 +73,9 @@ const booksContainer = createAndInsertElement('div', 'new-books-container', newB
 
 // getBooks();
 
-addBooksButtons();
+// addBooksButtons();
+
+// createPopup();
+
+addAndRemoveItemToCart();
+

@@ -1,9 +1,17 @@
 const booksIDArray = ['dCrockford', 'dHerman', 'dFlanagan', 'eElliott', 'aOsmani', 'bCherny', 'aBanks', 'bMeck', 'kSimpson', 'jResig'];
 const booksCollection = [];
 
+//Cart
+
+const cart = {
+    itemsInCart: [],
+    numItemsInCart: 0,
+    totalCost: 0,
+};
+
 /*createElement: создает и вставляет элемент в указанную позицию. Принимает название html-тега, имя присваемого класса, имя родительского элемента, имя метода для вставки и содержимое создаваемого элемента (по умолчанию пустая строка), возвращает готовый html-элемент.*/
 
-function createAndInsertElement(html, className, parrentElement, insertMethod, value = '') {
+function createAndInsertElement(html, className, parentElement, insertMethod, value = '') {
     const newElem = document.createElement(html);
 
     newElem.classList.add(className);
@@ -11,19 +19,19 @@ function createAndInsertElement(html, className, parrentElement, insertMethod, v
 
     switch (insertMethod) {
         case 'append':
-            parrentElement.append(newElem);
+            parentElement.append(newElem);
             break;
         case 'prepend':
-            parrentElement.prepend(newElem);
+            parentElement.prepend(newElem);
             break;
         case 'before':
-            parrentElement.before(newElem);
+            parentElement.before(newElem);
             break;
         case 'after':
-            parrentElement.after(newElem);
+            parentElement.after(newElem);
             break;
         case 'replaceWith':
-            parrentElement.replaceWith(newElem);
+            parentElement.replaceWith(newElem);
             break;
     }
 
@@ -40,23 +48,24 @@ function getBooksDataFromJson(arrTo, path) {
 }
 
 //
-function createBooks(title, author, price, cover, id) {
+function createBooks(title, author, descr, price, cover, id) {
 
     const book = createAndInsertElement('div', 'book', booksContainer, 'prepend');
     book.setAttribute('id', id);
 
-    const bookCoverCantainer = createAndInsertElement('div', 'book-cover-container', book, 'prepend');
+    const bookCoverContainer = createAndInsertElement('div', 'book-cover-container', book, 'prepend');
 
-    const bookCover = createAndInsertElement('img', 'book-cover', bookCoverCantainer, 'prepend');
-    bookCover.setAttribute('src', `/assets/images/${cover}.jpeg`);
+    const bookCover = createAndInsertElement('img', 'book-cover', bookCoverContainer, 'prepend');
+    bookCover.setAttribute('src', `../../assets/images/${cover}.jpeg`);
     bookCover.setAttribute('alt', `${author} - ${title}`);
 
-    const toCartBtn = createAndInsertElement('div', 'to-cart', bookCoverCantainer, 'prepend', 'add to cart');
-    const moreInfo = createAndInsertElement('div', 'more-info', bookCoverCantainer, 'prepend', 'more info');
+    const toCartBtn = createAndInsertElement('button', 'to-cart', bookCoverContainer, 'prepend', 'add to cart');
+    const moreInfo = createAndInsertElement('button', 'more-info', bookCoverContainer, 'prepend', 'more info');
 
 
     const bookTitle = createAndInsertElement('h4', 'book-name', book, 'append', title),
         bookAuthor = createAndInsertElement('p', 'book-author', book, 'append', author),
+        bookDescr = createAndInsertElement('p', 'book-descr', book, 'append', descr),
         bookPrice = createAndInsertElement('p', 'book-price', book, 'append', `$ ${price}.00`);
 }
 
@@ -64,10 +73,10 @@ function createBooks(title, author, price, cover, id) {
 async function getBooks() {
     const arr = [];
 
-    await getBooksDataFromJson(arr, '/assets/json/books.json');
+    await getBooksDataFromJson(arr, '../../assets/json/books.json');
 
     for (let i = 0; i < arr.length; i++) {
-        createBooks(arr[i].title, arr[i].author, arr[i].price, booksIDArray[i], booksIDArray[i]);
+        createBooks(arr[i].title, arr[i].author, arr[i].description, arr[i].price, booksIDArray[i], booksIDArray[i]);
     }
 }
 
@@ -97,7 +106,7 @@ async function addBooksButtons(elem) {
     booksCollection.push(jResig);
 
     booksCollection.reverse();
-    
+
     const toCartColl = document.querySelectorAll('.to-cart'),
         moreInfoColl = document.querySelectorAll('.more-info');
 
@@ -106,10 +115,185 @@ async function addBooksButtons(elem) {
             toCartColl[i].classList.add('book-hover');
             moreInfoColl[i].classList.add('book-hover');
         });
-    
+
         booksCollection[i].addEventListener('mouseleave', () => {
             toCartColl[i].classList.remove('book-hover');
             moreInfoColl[i].classList.remove('book-hover');
         });
     }
+}
+
+//
+async function createPopup() {
+    await addBooksButtons();
+
+    const booksCollection = booksContainer.children;
+
+    for (let parent of booksCollection) {
+        const parentCover = parent.querySelector('.book-cover'),
+            parentTitle = parent.querySelector('.book-name'),
+            parentAuthor = parent.querySelector('.book-author'),
+            parentDescr = parent.querySelector('.book-descr'),
+            parentPrice = parent.querySelector('.book-price');
+
+        const bookPopup = createAndInsertElement('div', 'book-popup', parent, 'append');
+        const bookPopupContainer = createAndInsertElement('div', 'book-popup-container', bookPopup, 'prepend');
+
+        const bookPopupCoverContainer = createAndInsertElement('div', 'book-popup-cover-conteiner', bookPopupContainer, 'append');
+        const bookPopupCover = createAndInsertElement('img', 'book-popup-cover', bookPopupCoverContainer, 'append');
+
+        bookPopupCover.setAttribute('src', parentCover.getAttribute('src'));
+        bookPopupCover.setAttribute('alt', `${parentAuthor.innerHTML} - ${parentTitle.innerHTML}`);
+
+        const bookPopupContentContainer = createAndInsertElement('div', 'book-popup-content-conteiner', bookPopupContainer, 'append');
+
+        const bookPopupTitle = createAndInsertElement('h2', 'book-popup-title', bookPopupContentContainer, 'append', parentTitle.innerHTML),
+            bookPopupAuthor = createAndInsertElement('p', 'book-popup-author', bookPopupContentContainer, 'append', parentAuthor.innerHTML),
+            bookPopupDescr = createAndInsertElement('p', 'book-popup-descr', bookPopupContentContainer, 'append', parentDescr.innerHTML),
+            bookPopupPrice = createAndInsertElement('p', 'book-popup-price', bookPopupContentContainer, 'append', parentPrice.innerHTML),
+            bookPopupBtn = createAndInsertElement('button', 'book-popup-button', bookPopupContentContainer, 'append', 'ADD TO CART');
+
+        const bookPopupCloseBtn = createAndInsertElement('button', 'book-popup-close-button', bookPopupContainer, 'append');
+    }
+}
+
+//
+async function showAndClosePopup() {
+    await createPopup();
+
+    for (let book of booksCollection) {
+        const moreInfoBtn = book.querySelector('.more-info'),
+            popup = book.querySelector('.book-popup'),
+            popUpCloseBtn = book.querySelector('.book-popup-close-button');
+
+        moreInfoBtn.onclick = function () {
+            popup.classList.add('book-popup-visible');
+        };
+
+        popUpCloseBtn.onclick = function () {
+            popup.classList.remove('book-popup-visible');
+        };
+    }
+}
+
+//
+
+function createCartItem(title, author, price, coverPath) {
+    const cartElementPopupItem = createAndInsertElement('div', 'cart-popup-item', cartElementPopupItemsContainer, 'append');
+
+    const cartElementPopupItemCoverContainer = createAndInsertElement('div', 'cart-popup-item-cover-container', cartElementPopupItem, 'append'),
+        cartElementPopupItemCover = createAndInsertElement('img', 'cart-popup-item-cover-container', cartElementPopupItemCoverContainer, 'append'),
+        cartElementPopupItemDescr = createAndInsertElement('div', 'cart-popup-item-description', cartElementPopupItem, 'append'),
+        cartElementPopupItemDescrTitle = createAndInsertElement('div', 'cart-popup-item-description-title', cartElementPopupItemDescr, 'append', `${title}`),
+        cartElementPopupItemDescrAuthor = createAndInsertElement('div', 'cart-popup-item-description-author', cartElementPopupItemDescr, 'append', `${author}`),
+        cartElementPopupItemDescrPrice = createAndInsertElement('div', 'cart-popup-item-description-price', cartElementPopupItemDescr, 'append', `${price}`),
+        cartElementPopupItemDeleteBtn = createAndInsertElement('button', 'cart-popup-item-delete-button', cartElementPopupItem, 'append');
+
+    cartElementPopupItemCover.setAttribute('src', coverPath);
+    cartElementPopupItemCover.setAttribute('alt', `${author} - ${title}`);
+}
+
+async function addAndRemoveItemToCart() {
+    await showAndClosePopup();
+
+    const toCartButtonsCollection = document.querySelectorAll('.to-cart'),
+        toCartPopupButtonsCollection = document.querySelectorAll('.book-popup-button');
+
+    toCartButtonsCollection.forEach(item => {
+        item.addEventListener('click', () => {
+
+            //Create and add items to cart:
+
+            const parent = item.parentElement.parentElement,
+                parentTitle = parent.querySelector('.book-name'),
+                parentAuthor = parent.querySelector('.book-author'),
+                parentPrice = parent.querySelector('.book-price'),
+                parentCoverPath = parent.querySelector('.book-cover');
+
+            createCartItem(parentTitle.innerHTML, parentAuthor.innerHTML, parentPrice.innerHTML, parentCoverPath.getAttribute('src'));
+
+            cartElementNum.classList.add('cart-number-vivsible');
+
+            cartEmpty.classList.add('cart-empty-invisible');
+
+            const removeFromCartButtonsCollection = document.getElementsByClassName('cart-popup-item-delete-button');
+            cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
+
+            setCartTotal(removeFromCartButtonsCollection, 'add', parentPrice);
+
+            //Remove items from cart:
+
+            for (let item of removeFromCartButtonsCollection) {
+                item.addEventListener('click', () => {
+                    item.parentElement.remove();
+                    cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
+                    setCartTotal(removeFromCartButtonsCollection, 'remove', parentPrice);
+
+                    if (removeFromCartButtonsCollection.length == 0) {
+                        cartElementNum.classList.remove('cart-number-vivsible');
+                        cartEmpty.classList.remove('cart-empty-invisible');
+                        cartElementPopupTotal.innerHTML = '';
+                    }
+                });
+            }
+        });
+    });
+
+    toCartPopupButtonsCollection.forEach(item => {
+        item.addEventListener('click', () => {
+
+            //Create and add items to cart:
+
+            const parent = item.closest('.book'),
+                parentTitle = parent.querySelector('.book-name'),
+                parentAuthor = parent.querySelector('.book-author'),
+                parentPrice = parent.querySelector('.book-price'),
+                parentCoverPath = parent.querySelector('.book-cover');
+
+            createCartItem(parentTitle.innerHTML, parentAuthor.innerHTML, parentPrice.innerHTML, parentCoverPath.getAttribute('src'));
+
+            cartElementNum.classList.add('cart-number-vivsible');
+            cartEmpty.classList.add('cart-empty-invisible');
+
+            const removeFromCartButtonsCollection = document.getElementsByClassName('cart-popup-item-delete-button');
+            cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
+            setCartTotal(removeFromCartButtonsCollection, 'add', parentPrice);
+
+            //Remove items from cart:
+
+            for (let item of removeFromCartButtonsCollection) {
+                item.addEventListener('click', () => {
+                    item.parentElement.remove();
+                    cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
+                    setCartTotal(removeFromCartButtonsCollection, 'remove', parentPrice);
+                    console.log('2 - ', parentPrice);
+
+                    if (removeFromCartButtonsCollection.length == 0) {
+                        cartElementNum.classList.remove('cart-number-vivsible');
+                        cartEmpty.classList.remove('cart-empty-invisible');
+                        cartElementPopupTotal.innerHTML = '';
+                    }
+                });
+            }
+
+        });
+    });
+
+}
+
+function setCartTotal(booksCollection, method, sum = '00') {
+    // console.log(booksCollection.closest('.'));
+
+    switch (method) {
+        case 'add':
+            cart.totalCost += +sum.innerHTML.slice(2, 4);
+            break;
+        case 'remove':
+            cart.totalCost -= +sum.innerHTML.slice(2, 4);
+            break;
+    }
+
+    console.log(cart.totalCost);
+
+    cartElementPopupTotal.innerHTML = `Items in cart: ${booksCollection.length} for $${cart.totalCost}.00`;
 }

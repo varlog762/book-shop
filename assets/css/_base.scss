@@ -1,0 +1,115 @@
+$a-font: Arimo,
+sans-serif;
+
+@mixin footer-text($f-size: 18px) {
+    font-family: $a-font;
+    font-size: $f-size;
+    font-style: normal;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+input, label {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    border: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.wrapper {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.header-main {
+    background-color: #393280;
+
+    .header-content-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+
+        .header-title {
+            font-family: $a-font;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 27px;
+            letter-spacing: 0.02em;
+            color: #FFFFFF;
+        }
+
+        .header-nav {
+            padding-top: 3px;
+
+            .header-nav-list {
+                width: 140px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .header-list-item {
+                    display: block;
+                    width: 20px;
+                    height: 20px;
+
+                    .header-list-item-link {
+                        display: block;
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                    .header-list-item-link:hover {
+                        cursor: pointer;
+                    }
+
+                    .facebook {
+                        background: url(/assets/icons/facebook.svg) no-repeat center center;
+                    }
+
+                    .instagram {
+                        background: url(/assets/icons/insta.svg) no-repeat center center;
+                    }
+
+                    .linkedin {
+                        background: url(/assets/icons/linkedin.svg) no-repeat center center;
+                    }
+
+                    .twitter {
+                        background: url(/assets/icons/twitter.svg) no-repeat center center;
+                    }
+
+                    .blogger {
+                        background: url(/assets/icons/blogger.svg) no-repeat center center;
+                    }
+                }
+            }
+        }
+    }
+}

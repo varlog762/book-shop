@@ -1,3 +1,5 @@
+@use 'base';
+
 $a-font: Arimo,
 sans-serif;
 
@@ -7,106 +9,6 @@ sans-serif;
     font-style: normal;
     letter-spacing: 0.02em;
     color: #FFFFFF;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-p,
-h1,
-h2,
-h3,
-h4 {
-    margin: 0;
-    padding: 0;
-}
-
-ul,
-li {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
-button {
-    border: none;
-}
-
-a {
-    text-decoration: none;
-}
-
-.wrapper {
-    margin: 0 auto;
-    max-width: 1200px;
-}
-
-.header-main {
-    background-color: #393280;
-
-    .header-content-container {
-        display: flex;
-        justify-content: space-between;
-        padding: 15px 0;
-
-        .header-title {
-            font-family: $a-font;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 22px;
-            line-height: 27px;
-            letter-spacing: 0.02em;
-            color: #FFFFFF;
-        }
-
-        .header-nav {
-            padding-top: 3px;
-
-            .header-nav-list {
-                width: 140px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                .header-list-item {
-                    display: block;
-                    width: 20px;
-                    height: 20px;
-
-                    .header-list-item-link {
-                        display: block;
-                        width: 20px;
-                        height: 20px;
-                    }
-
-                    .header-list-item-link:hover {
-                        cursor: pointer;
-                    }
-
-                    .facebook {
-                        background: url(/assets/icons/facebook.svg) no-repeat center center;
-                    }
-
-                    .instagram {
-                        background: url(/assets/icons/insta.svg) no-repeat center center;
-                    }
-
-                    .linkedin {
-                        background: url(/assets/icons/linkedin.svg) no-repeat center center;
-                    }
-
-                    .twitter {
-                        background: url(/assets/icons/twitter.svg) no-repeat center center;
-                    }
-
-                    .blogger {
-                        background: url(/assets/icons/blogger.svg) no-repeat center center;
-                    }
-                }
-            }
-        }
-    }
 }
 
 .main-content {
@@ -333,7 +235,7 @@ a {
                             .cart-empty {
                                 display: block;
                                 margin-top: 50px;
-                                margin-bottom: 100px;
+                                margin-bottom: 94px;
                                 font-family: $a-font;
                                 font-style: normal;
                                 font-weight: 500;
@@ -358,16 +260,13 @@ a {
                             .cart-popup-total-cost {
                                 display: block;
                                 margin: 10px 0;
-                                text-align: right;
                                 margin-bottom: 10px;
-                                // padding-left: 141px;
                                 font-family: $a-font;
                                 font-style: normal;
                                 font-weight: 700;
                                 font-size: 22px;
                                 line-height: 28px;
                                 letter-spacing: 0.02em;
-                                text-transform: capitalize;
                                 color: #ED553B;
                             }
 
@@ -376,10 +275,11 @@ a {
                             }
 
                             .cart-popup-checkout-button {
+                                padding-top: 13px;
                                 display: block;
                                 width: 200px;
                                 height: 60px;
-                                border: 1px solid #ED553B;
+                                border: 1px solid #888;
                                 font-family: $a-font;
                                 font-style: normal;
                                 font-weight: 500;
@@ -387,19 +287,23 @@ a {
                                 line-height: 220%;
                                 letter-spacing: 0.1em;
                                 text-transform: uppercase;
-                                color: #ED553B;
+                                color: #888;
+                                text-align: center;
                                 transition: all 0.3s ease;
+                                pointer-events: none;
                             }
 
-                            .cart-popup-checkout-button-visible {
-                                display: block;
+                            .cart-popup-checkout-button-active {
+                                border: 1px solid #ED553B;
+                                color: #ED553B;
+                                pointer-events: all;
                             }
 
-                            .cart-popup-checkout-button:hover {
+                            .cart-popup-checkout-button-active:hover {
                                 cursor: pointer;
                             }
 
-                            .cart-popup-checkout-button:active {
+                            .cart-popup-checkout-button-active:active {
                                 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
                                 transform: translateY(2px);
                             }

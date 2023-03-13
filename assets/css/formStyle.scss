@@ -1,0 +1,126 @@
+@use 'base';
+
+$a-font: Arimo,
+sans-serif;
+
+.form-section {
+
+    .form {
+        padding: 40px 10px;
+
+        .form-fieldset {
+            border: none;
+
+            .form-legend {
+                margin-bottom: 40px;
+                font-family: $a-font;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 48px;
+                line-height: 58px;
+                text-transform: capitalize;
+                color: #393280;
+            }
+
+            .field {
+                margin-bottom: 20px;
+                background-color: #F5F5F5;
+                width: 300px;
+                height: 30px;
+                border: 1px solid #CCCCCC;
+                box-shadow: 2px 2px 2px #CCCCCC;
+                border-radius: 5px;
+                padding: 5px;
+                font-family: $a-font;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 13px;
+                line-height: 16px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: #888888;
+            }
+
+            .form-label {
+                font-family: $a-font;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 15px;
+                line-height: 16px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: #888888;
+            }
+
+            .field-label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .payment-method-label {
+                font-family: $a-font;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 16px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: #888888;
+            }
+
+            .radio-label {
+                font-family: $a-font;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 13px;
+                line-height: 16px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: #888888;
+            }
+
+            .cash-radio {
+                margin-top: 10px;
+                margin-bottom: 5px;
+            }
+
+            .card-radio {
+                margin-bottom: 20px;
+            }
+
+            .checkbox-title-label {
+                display: block;
+                font-size: 18px;
+            }
+
+            .checkbox {
+                margin-top: 5px;
+            }
+
+            .checkbox-label {
+                font-size: 13px;
+            }
+
+            .form-submit {
+                margin-top: 40px;
+                display: block;
+                width: 200px;
+                height: 60px;
+                border: 1px solid #ED553B;
+                font-family: $a-font;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 220%;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #ED553B;
+                transition: all 0.3s ease;
+            }
+
+            .form-submit:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

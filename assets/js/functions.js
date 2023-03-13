@@ -1,6 +1,8 @@
 const booksIDArray = ['dCrockford', 'dHerman', 'dFlanagan', 'eElliott', 'aOsmani', 'bCherny', 'aBanks', 'bMeck', 'kSimpson', 'jResig'];
 const booksCollection = [];
 
+const itemsInCartCollection = document.getElementsByClassName('cart-popup-item');
+
 //Cart
 
 const cart = {
@@ -191,6 +193,8 @@ function createCartItem(title, author, price, coverPath) {
 
     cartElementPopupItemCover.setAttribute('src', coverPath);
     cartElementPopupItemCover.setAttribute('alt', `${author} - ${title}`);
+
+    return cartElementPopupItem;
 }
 
 async function addAndRemoveItemToCart() {
@@ -199,47 +203,14 @@ async function addAndRemoveItemToCart() {
     const toCartButtonsCollection = document.querySelectorAll('.to-cart'),
         toCartPopupButtonsCollection = document.querySelectorAll('.book-popup-button');
 
-    toCartButtonsCollection.forEach(item => {
-        item.addEventListener('click', () => {
+    itemsToCartAdder(toCartButtonsCollection);
+    itemsToCartAdder(toCartPopupButtonsCollection);
 
-            //Create and add items to cart:
 
-            const parent = item.parentElement.parentElement,
-                parentTitle = parent.querySelector('.book-name'),
-                parentAuthor = parent.querySelector('.book-author'),
-                parentPrice = parent.querySelector('.book-price'),
-                parentCoverPath = parent.querySelector('.book-cover');
+}
 
-            createCartItem(parentTitle.innerHTML, parentAuthor.innerHTML, parentPrice.innerHTML, parentCoverPath.getAttribute('src'));
-
-            cartElementNum.classList.add('cart-number-vivsible');
-
-            cartEmpty.classList.add('cart-empty-invisible');
-
-            const removeFromCartButtonsCollection = document.getElementsByClassName('cart-popup-item-delete-button');
-            cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
-
-            setCartTotal(removeFromCartButtonsCollection, 'add', parentPrice);
-
-            //Remove items from cart:
-
-            for (let item of removeFromCartButtonsCollection) {
-                item.addEventListener('click', () => {
-                    item.parentElement.remove();
-                    cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
-                    setCartTotal(removeFromCartButtonsCollection, 'remove', parentPrice);
-
-                    if (removeFromCartButtonsCollection.length == 0) {
-                        cartElementNum.classList.remove('cart-number-vivsible');
-                        cartEmpty.classList.remove('cart-empty-invisible');
-                        cartElementPopupTotal.innerHTML = '';
-                    }
-                });
-            }
-        });
-    });
-
-    toCartPopupButtonsCollection.forEach(item => {
+function itemsToCartAdder(collection) {
+    collection.forEach(item => {
         item.addEventListener('click', () => {
 
             //Create and add items to cart:
@@ -250,50 +221,50 @@ async function addAndRemoveItemToCart() {
                 parentPrice = parent.querySelector('.book-price'),
                 parentCoverPath = parent.querySelector('.book-cover');
 
-            createCartItem(parentTitle.innerHTML, parentAuthor.innerHTML, parentPrice.innerHTML, parentCoverPath.getAttribute('src'));
+            const newBookInCart = createCartItem(parentTitle.innerHTML, parentAuthor.innerHTML, parentPrice.innerHTML, parentCoverPath.getAttribute('src'));
 
+            cart.numItemsInCart++;
             cartElementNum.classList.add('cart-number-vivsible');
             cartEmpty.classList.add('cart-empty-invisible');
+            cartElementPopupCheckoutButton.classList.add('cart-popup-checkout-button-active');
 
-            const removeFromCartButtonsCollection = document.getElementsByClassName('cart-popup-item-delete-button');
-            cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
-            setCartTotal(removeFromCartButtonsCollection, 'add', parentPrice);
+            cartElementNum.innerHTML = cart.numItemsInCart;
+            setCartTotal(newBookInCart, 'add');
 
-            //Remove items from cart:
-
-            for (let item of removeFromCartButtonsCollection) {
-                item.addEventListener('click', () => {
-                    item.parentElement.remove();
-                    cartElementNum.innerHTML = removeFromCartButtonsCollection.length;
-                    setCartTotal(removeFromCartButtonsCollection, 'remove', parentPrice);
-                    console.log('2 - ', parentPrice);
-
-                    if (removeFromCartButtonsCollection.length == 0) {
-                        cartElementNum.classList.remove('cart-number-vivsible');
-                        cartEmpty.classList.remove('cart-empty-invisible');
-                        cartElementPopupTotal.innerHTML = '';
-                    }
-                });
-            }
-
+            itemRemover(newBookInCart);
         });
     });
-
 }
 
-function setCartTotal(booksCollection, method, sum = '00') {
-    // console.log(booksCollection.closest('.'));
+function itemRemover(bookInCart) {
+    const bookRemoveButton = bookInCart.querySelector('.cart-popup-item-delete-button');
+    bookRemoveButton.addEventListener('click', () => {
+        cart.numItemsInCart--;
+        cartElementNum.innerHTML = cart.numItemsInCart;
+        setCartTotal(bookInCart, 'remove');
+
+        if (cart.numItemsInCart == 0) {
+            cartElementNum.classList.remove('cart-number-vivsible');
+            cartEmpty.classList.remove('cart-empty-invisible');
+            cartElementPopupTotal.innerHTML = '';
+            cartElementPopupCheckoutButton.classList.remove('cart-popup-checkout-button-active');
+        }
+
+        bookInCart.remove();
+    });
+}
+
+function setCartTotal(bookInCart, method) {
+    const price = bookInCart.querySelector('.cart-popup-item-description-price');
 
     switch (method) {
         case 'add':
-            cart.totalCost += +sum.innerHTML.slice(2, 4);
+            cart.totalCost += +price.innerHTML.slice(2, 4);
             break;
         case 'remove':
-            cart.totalCost -= +sum.innerHTML.slice(2, 4);
+            cart.totalCost -= +price.innerHTML.slice(2, 4);
             break;
     }
 
-    console.log(cart.totalCost);
-
-    cartElementPopupTotal.innerHTML = `Items in cart: ${booksCollection.length} for $${cart.totalCost}.00`;
+    cartElementPopupTotal.innerHTML = `Items in cart: ${cart.numItemsInCart}<br> Total cost: $${cart.totalCost}.00`;
 }

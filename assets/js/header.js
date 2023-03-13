@@ -8,7 +8,11 @@ const headerContetntContainer = createAndInsertElement('div', 'header-content-co
 
 // Header H1:
 
-const headerTitle = createAndInsertElement('H1', 'header-title', headerContetntContainer, 'append', 'Bookshop');
+const headerTitleLink = createAndInsertElement('a', 'header-title', headerContetntContainer, 'append');
+
+headerTitleLink.setAttribute('href', 'index.html');
+
+const headerTitle = createAndInsertElement('H1', 'header-title', headerTitleLink, 'append', 'Bookshop');
 
 // Header Nav:
 

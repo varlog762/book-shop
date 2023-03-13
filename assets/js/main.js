@@ -50,12 +50,12 @@ const cartElementPopupTitle = createAndInsertElement('h2', 'cart-popup-title', c
     cartElementPopupDownContainer = createAndInsertElement('div', 'cart-popup-down-container', cartElementPopupContainer, 'append'),
     cartElementPopupTotal = createAndInsertElement('div', 'cart-popup-total-cost', cartElementPopupDownContainer, 'append'),
     cartEmpty = createAndInsertElement('div', 'cart-empty', cartElementPopupItemsContainer, 'append', 'Your Cart is Empty.'),
-    cartElementPopupCheckoutButton = createAndInsertElement('button', 'cart-popup-checkout-button', cartElementPopupDownContainer, 'append', 'Checkout'),
+    cartElementPopupCheckoutButton = createAndInsertElement('a', 'cart-popup-checkout-button', cartElementPopupDownContainer, 'append', 'Checkout'),
     cartElementPopupCloseButton = createAndInsertElement('button', 'cart-popup-close-button', cartElementPopupContainer, 'append');
 
 // console.log(cartElementPopupDownContainer);
 
-cartElementPopupCheckoutButton.setAttribute('type', 'button');
+cartElementPopupCheckoutButton.setAttribute('href', 'form.html');
 cartElementPopupCloseButton.setAttribute('type', 'button');
 
 cartElementButton.addEventListener('click', () => cartElementPopup.classList.add('cart-popup-visible'));
@@ -71,11 +71,4 @@ createAndInsertElement('p', 'new-books-description', newBooksSectionWrapper, 'ap
 createAndInsertElement('h2', 'new-books-title', newBooksSectionWrapper, 'append', 'New Release Books');
 const booksContainer = createAndInsertElement('div', 'new-books-container', newBooksSectionWrapper, 'append');
 
-// getBooks();
-
-// addBooksButtons();
-
-// createPopup();
-
 addAndRemoveItemToCart();
-

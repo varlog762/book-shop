@@ -1,4 +1,12 @@
-const footerElement = createAndInsertElement('footer', 'footer-main', mainElement, 'after');
+const mainShop = document.querySelector('.main-content');
+const mainForm = document.querySelector('.main__form');
+let footerElement;
+
+if (mainShop!= null) {
+    footerElement = createAndInsertElement('footer', 'footer', mainShop, 'after');
+} else {
+    footerElement = createAndInsertElement('footer', 'footer', mainForm, 'after');
+}
 
 createAndInsertElement('div', 'wrapper', footerElement, 'append');
 

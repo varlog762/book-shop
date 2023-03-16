@@ -16,21 +16,21 @@
 </head>
 
 <body>
-    <main>
-        <section class="form-section">
+    <main class="main__form">
+        <div class="form-section">
             <div class="wrapper">
-                <form action="/submit-form" method="post" class="form">
+                <form action="/submit-form" method="post" class="form" name="order_form">
                     <fieldset class="form-fieldset">
                         <legend class="form-legend">Order Form</legend>
 
                         <label for="name" class="form-label field-label name-field-label">Name:</label>
-                        <input type="text" id="name" name="name" required class="name-field field"><br>
+                        <input type="text" id="name" name="name" class="name-field field"><br>
 
                         <label for="surname" class="form-label field-label surname-field-label">Surname:</label>
-                        <input type="text" id="surname" name="surname" required class="surname-field field"><br>
+                        <input type="text" id="surname" name="surname" class="surname-field field"><br>
 
                         <label for="street" class="form-label field-label street-field-label">Street:</label>
-                        <input type="text" id="street" name="street" required class="street-field field"><br>
+                        <input type="text" id="street" name="street" class="street-field field"><br>
 
                         <label for="house-number" class="form-label field-label house-number-field-label">House number:</label>
                         <input type="text" id="house-number" name="house-number" required class="house-number-field field"><br>
@@ -57,14 +57,16 @@
                         <input type="checkbox" id="checkbox4" name="checkbox4" value="4" class="checkbox">
                         <label for="checkbox4" class="form-label checkbox-label">Branded pen</label><br>
 
-                        <input type="submit" value="Complete" class="form-submit">
+                        <input type="submit" value="Complete" class="form-submit" disabled>
                     </fieldset>
                 </form>
             </div>
-        </section>
+        </div>
     </main>
     <script src="assets/js/functions.js"></script>
     <script src="assets/js/header.js"></script>
+    <script src="assets/js/footer.js"></script>
+    <script src="assets/js/formValidation.js"></script>
 </body>
 
 </html>

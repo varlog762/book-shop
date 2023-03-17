@@ -42,8 +42,8 @@ function createAndInsertElement(html, className, parentElement, insertMethod, va
 
 
 //Функция парсит JSON 
-function getBooksDataFromJson(arrTo, path) {
-    return fetch(path)
+function getBooksDataFromJson(arrTo) {
+    return fetch('../assets/json/books.json')
         .then(response => response.json())
         .then(data => arrTo.push(...data))
         .catch(error => console.error(error));
@@ -75,7 +75,7 @@ function createBooks(title, author, descr, price, cover, id) {
 async function getBooks() {
     const arr = [];
 
-    await getBooksDataFromJson(arr, '../assets/json/books.json');
+    await getBooksDataFromJson(arr);
 
     for (let i = 0; i < arr.length; i++) {
         createBooks(arr[i].title, arr[i].author, arr[i].description, arr[i].price, booksIDArray[i], booksIDArray[i]);

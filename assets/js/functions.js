@@ -43,7 +43,7 @@ function createAndInsertElement(html, className, parentElement, insertMethod, va
 
 //Функция парсит JSON 
 function getBooksDataFromJson(arrTo) {
-    return fetch('./json/books.json')
+    return fetch('./assets/json/books.json')
         .then(response => response.json())
         .then(data => arrTo.push(...data))
         .catch(error => console.error(error));

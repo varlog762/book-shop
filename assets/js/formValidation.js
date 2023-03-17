@@ -4,18 +4,36 @@ const result = {
     'Name': '',
     'Surname': '',
     'Street': '',
-    'house-number': '',
+    'House number': '',
     'Flat number': '',
-    // 'delivery-date': '',
+    'Delivery date': '',
     'Payment type': 'cash',
 };
 
-let orderStatus = false;
+let orderStatus = false,
+    giftCount = 0;
 
 const orderForm = document.forms.order_form;
 
 orderForm.addEventListener('focusout', dataValidator);
 orderForm.addEventListener('input', dataValidator);
+
+orderForm['payment-method'][0].addEventListener('change', () => {
+    result['Payment type'] = orderForm['payment-method'][0].value
+});
+orderForm['payment-method'][1].addEventListener('change', () => {
+    result['Payment type'] = orderForm['payment-method'][1].value
+});
+
+orderForm.addEventListener('change', giftChecker);
+
+const submitBtn = orderForm.querySelector('.form-submit'),
+    resultPopup = orderForm.querySelector('.result-popup');
+
+submitBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    resultPopup.classList.add('result-popup--visible');
+});
 
 function dataValidator(event) {
     if (event.target === orderForm.name) {
@@ -75,10 +93,44 @@ function dataValidator(event) {
         /* Delivery date */
     } else if (event.target === orderForm['delivery-date']) {
         const currentDate = new Date(),
-            day = currentDate.getDate(),
-            orderDate = event.target.value;
-        submitUnlocker(result);
+            orderDate = new Date(event.target.value);
+
+        if (orderDate <= currentDate) {
+            orderForm['delivery-date'].classList.add('field-error');
+            result['Delivery date'] = '';
+        } else {
+            result['Delivery date'] = orderForm['delivery-date'].value;
+            orderForm['delivery-date'].classList.remove('field-error');
+            submitUnlocker(result);
+        }
     }
+}
+
+function giftChecker(event) {
+    const giftsCollection = orderForm.querySelectorAll('.checkbox');
+
+    for (let gift of giftsCollection) {
+        if (event.target === gift) {
+            if (gift.checked) {
+                giftCount++;
+                if (giftCount >= 2) {
+                    for (let gift of giftsCollection) {
+                        if (!gift.checked) {
+                            gift.disabled = true;
+                        }
+                    }
+                }
+            } else {
+                giftCount--;
+                for (let gift of giftsCollection) {
+                    if (!gift.checked) {
+                        gift.disabled = false;
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 function submitUnlocker(obj) {
@@ -93,6 +145,10 @@ function submitUnlocker(obj) {
 
     if (isDataValid) {
         submitBtn.disabled = false;
+        submitBtn.classList.add('form-submit-active');
+        console.log(result);
+    } else {
+        submitBtn.classList.remove('form-submit-active');
     }
 }
 

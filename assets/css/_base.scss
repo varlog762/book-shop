@@ -124,6 +124,7 @@ a {
 
         .footer-description {
             width: 368px;
+            margin-right: 40px;
 
             .footer-description-logo {
                 margin-bottom: 10px;
@@ -178,7 +179,8 @@ a {
         }
 
         .footer-company {
-
+            margin-right: 40px;
+            
             .footer-company-title {
                 @include footer-text(24px);
                 margin-bottom: 40px;

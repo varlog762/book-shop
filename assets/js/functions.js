@@ -75,7 +75,7 @@ function createBooks(title, author, descr, price, cover, id) {
 async function getBooks() {
     const arr = [];
 
-    await getBooksDataFromJson(arr, '../../assets/json/books.json');
+    await getBooksDataFromJson(arr, '../json/books.json');
 
     for (let i = 0; i < arr.length; i++) {
         createBooks(arr[i].title, arr[i].author, arr[i].description, arr[i].price, booksIDArray[i], booksIDArray[i]);

@@ -58,7 +58,7 @@ function createBooks(title, author, descr, price, cover, id) {
     const bookCoverContainer = createAndInsertElement('div', 'book-cover-container', book, 'prepend');
 
     const bookCover = createAndInsertElement('img', 'book-cover', bookCoverContainer, 'prepend');
-    bookCover.setAttribute('src', `../../assets/images/${cover}.jpeg`);
+    bookCover.setAttribute('src', `assets/images/${cover}.jpeg`);
     bookCover.setAttribute('alt', `${author} - ${title}`);
 
     const toCartBtn = createAndInsertElement('button', 'to-cart', bookCoverContainer, 'prepend', 'add to cart');

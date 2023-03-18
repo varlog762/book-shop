@@ -11,6 +11,25 @@ sans-serif;
         .form-fieldset {
             border: none;
 
+            .container-error {
+                position: relative;
+            }
+
+            .container-error::before {
+                content: "Incorrect input!";
+                position: absolute;
+                top: 52px;
+                left: 5px;
+                display: block;
+                font-size: 12px;
+                color: red;
+                margin-top: 5px;
+                font-family: $a-font;
+                text-transform: uppercase;
+                letter-spacing: 0.3em;
+            }
+
+
             .form-legend {
                 margin-bottom: 40px;
                 font-family: $a-font;
@@ -23,7 +42,7 @@ sans-serif;
             }
 
             .field {
-                margin-bottom: 20px;
+                margin-bottom: 25px;
                 background-color: #F5F5F5;
                 width: 300px;
                 height: 30px;
@@ -49,18 +68,6 @@ sans-serif;
             .field-error:focus {
                 outline: 2px solid red;
             }
-
-            // .field-error::before {
-            //     content: "Пожалуйста, введите только буквы";
-            //     position: absolute;
-            //     top: 300px;
-            //     left: 300px;
-            //     display: block;
-            //     font-size: 12px;
-            //     color: red;
-            //     margin-top: 5px;
-            //     font-family: $a-font;
-            // }
 
             .form-label {
                 font-family: $a-font;
@@ -155,6 +162,7 @@ sans-serif;
             transform: translateY(2px);
         }
     }
+
     .result-popup {
         display: none;
         position: fixed;
@@ -167,7 +175,7 @@ sans-serif;
         background-color: rgba(0, 0, 0, 0.8);
 
         .result-popup-container {
-            width: 1200px;
+            max-width: 800px;
             max-height: 800px;
             background: linear-gradient(78.43deg, #FBEEEE -27.34%, #F7FFFE 89.92%);
             margin: 5% auto;
@@ -189,14 +197,27 @@ sans-serif;
 
             .result-popup-data {
                 margin-bottom: 35px;
-                font-family: $a-font;
-                font-style: normal;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 208%;
-                letter-spacing: 0.02em;
-                color: #7A7A7A;
-                text-align: justify;
+
+                .result-popup-data-table {
+                    margin: 0 auto;
+                    font-family: $a-font;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 16px;
+                    letter-spacing: 0.16em;
+                    text-transform: uppercase;
+                    color: #888888;
+
+                    .result-popup-data-table-title {
+                        margin-bottom: 20px;
+                        font-size: 17px;
+                    }
+
+                    .td-value {
+                        text-transform: capitalize;
+                    }
+                }
             }
 
             .result-popup-home-link {

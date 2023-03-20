@@ -12,8 +12,15 @@ sans-serif;
 }
 
 .main-content {
+    position: relative;
 
     .user-account {
+        position: fixed;
+        top: 57px;
+        left: 0;
+        width: 100%;
+        z-index: 2;
+        background-color: #FFF;
 
         .user-account-container {
             display: flex;
@@ -122,7 +129,7 @@ sans-serif;
                 .cart-popup {
                     display: none;
                     position: fixed;
-                    z-index: 1;
+                    z-index: 99;
                     left: 0;
                     top: 0;
                     width: 100%;
@@ -492,7 +499,7 @@ sans-serif;
                 .book-popup {
                     display: none;
                     position: fixed;
-                    z-index: 1;
+                    z-index: 99;
                     left: 0;
                     top: 0;
                     width: 100%;

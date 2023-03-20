@@ -59,11 +59,11 @@
                                 class="delivery-date field"><br>
                         </div>
 
-                        <label for="payment-method" class="form-label payment-method-label">Payment type:</label><br>
-                        <input type="radio" id="cash-radio" name="payment-method" value="cash" required
+                        <label for="payment-type" class="form-label payment-type-label">Payment type:</label><br>
+                        <input type="radio" id="cash-radio" name="payment-type" value="cash" required
                             class="cash-radio" checked>
                         <label for="cash" class="radio-label cash-radio-label">Cash</label><br>
-                        <input type="radio" id="card-radio" name="payment-method" value="card" required
+                        <input type="radio" id="card-radio" name="payment-type" value="card" required
                             class="card-radio">
                         <label for="card" class="radio-label card-radio-label">Card</label><br>
 
@@ -73,8 +73,7 @@
                         <input type="checkbox" id="checkbox2" name="checkbox2" value="2" class="checkbox">
                         <label for="checkbox2" class="form-label checkbox-label">Add postcard</label><br>
                         <input type="checkbox" id="checkbox3" name="checkbox3" value="3" class="checkbox">
-                        <label for="checkbox3" class="form-label checkbox-label">Provide 2% discount to the next
-                            time</label><br>
+                        <label for="checkbox3" class="form-label checkbox-label">Provide 2% discount to the next time</label><br>
                         <input type="checkbox" id="checkbox4" name="checkbox4" value="4" class="checkbox">
                         <label for="checkbox4" class="form-label checkbox-label">Branded pen</label><br>
 
@@ -83,7 +82,7 @@
                 </form>
                 <div class="result-popup">
                     <div class="result-popup-container">
-                        <h2 class="result-popup-title">Your order is complete.</h2>
+                        <h2 class="result-popup-title">Your order has been confirmed!</h2>
                         <div class="result-popup-data">
                             <table class="result-popup-data-table">
                                 <caption class="result-popup-data-table-title">Order information:</caption>
@@ -114,6 +113,10 @@
                                 <tr class="row">
                                     <td class="td-payment-type">Payment type:</td>
                                     <td class="td-payment-type-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-gits">Gifts:</td>
+                                    <td class="td-gifts-value td-value">Value</td>
                                 </tr>
                             </table>
                         </div>

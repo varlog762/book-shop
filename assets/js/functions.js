@@ -1,18 +1,26 @@
+"use strict";
+
 const booksIDArray = ['dCrockford', 'dHerman', 'dFlanagan', 'eElliott', 'aOsmani', 'bCherny', 'aBanks', 'bMeck', 'kSimpson', 'jResig'];
 const booksCollection = [];
 
 const itemsInCartCollection = document.getElementsByClassName('cart-popup-item');
 
 //Cart
-
 const cart = {
     itemsInCart: [],
     numItemsInCart: 0,
     totalCost: 0,
 };
 
-/*createElement: создает и вставляет элемент в указанную позицию. Принимает название html-тега, имя присваемого класса, имя родительского элемента, имя метода для вставки и содержимое создаваемого элемента (по умолчанию пустая строка), возвращает готовый html-элемент.*/
-
+/**
+ * Creates an HTML element and inserts it at the specified position. 
+ * @param {html} - HTLM tag for a new element. 
+ * @param {className} - CSS class for a new element. 
+ * @param {parentElement} - Parent element into which the new element will be inserted.
+ * @param {insertMethod} - Insert method (append, prepend, before, after, replaceWith).
+ * @param {value} - Content of the new element.
+ * @returns {newElem} - Object of the new element.
+ */
 function createAndInsertElement(html, className, parentElement, insertMethod, value = '') {
     const newElem = document.createElement(html);
 
@@ -40,16 +48,18 @@ function createAndInsertElement(html, className, parentElement, insertMethod, va
     return newElem;
 }
 
-
-//Функция парсит JSON 
-function getBooksDataFromJson(arrTo) {
+/**
+ * Parses JSON and retrieves data for creating books.
+ * @param {arr}
+ * @returns ...
+ */
+function getDataFromJson(arr) {
     return fetch('./books.json')
         .then(response => response.json())
-        .then(data => arrTo.push(...data))
+        .then(data => arr.push(...data))
         .catch(error => console.error(error));
 }
 
-//
 function createBooks(title, author, descr, price, cover, id) {
 
     const book = createAndInsertElement('div', 'book', booksContainer, 'prepend');
@@ -60,10 +70,11 @@ function createBooks(title, author, descr, price, cover, id) {
     const bookCover = createAndInsertElement('img', 'book-cover', bookCoverContainer, 'prepend');
     bookCover.setAttribute('src', `assets/images/${cover}.jpeg`);
     bookCover.setAttribute('alt', `${author} - ${title}`);
+    bookCover.setAttribute('id', id + 'Cover');
+    bookCover.setAttribute('draggable', 'true');
 
     const toCartBtn = createAndInsertElement('button', 'to-cart', bookCoverContainer, 'prepend', 'add to cart');
     const moreInfo = createAndInsertElement('button', 'more-info', bookCoverContainer, 'prepend', 'more info');
-
 
     const bookTitle = createAndInsertElement('h4', 'book-name', book, 'append', title),
         bookAuthor = createAndInsertElement('p', 'book-author', book, 'append', author),
@@ -71,18 +82,16 @@ function createBooks(title, author, descr, price, cover, id) {
         bookPrice = createAndInsertElement('p', 'book-price', book, 'append', `$ ${price}.00`);
 }
 
-//
 async function getBooks() {
-    const arr = [];
+    const dataForBooksArray = [];
 
-    await getBooksDataFromJson(arr);
+    await getDataFromJson(dataForBooksArray);
 
-    for (let i = 0; i < arr.length; i++) {
-        createBooks(arr[i].title, arr[i].author, arr[i].description, arr[i].price, booksIDArray[i], booksIDArray[i]);
+    for (let i = 0; i < dataForBooksArray.length; i++) {
+        createBooks(dataForBooksArray[i].title, dataForBooksArray[i].author, dataForBooksArray[i].description, dataForBooksArray[i].price, booksIDArray[i], booksIDArray[i]);
     }
 }
 
-//
 async function addBooksButtons(elem) {
     await getBooks();
 
@@ -125,7 +134,6 @@ async function addBooksButtons(elem) {
     }
 }
 
-//
 async function createPopup() {
     await addBooksButtons();
 
@@ -159,7 +167,6 @@ async function createPopup() {
     }
 }
 
-//
 async function showAndClosePopup() {
     await createPopup();
 
@@ -177,8 +184,6 @@ async function showAndClosePopup() {
         };
     }
 }
-
-//
 
 function createCartItem(title, author, price, coverPath) {
     const cartElementPopupItem = createAndInsertElement('div', 'cart-popup-item', cartElementPopupItemsContainer, 'append');
@@ -206,7 +211,8 @@ async function addAndRemoveItemToCart() {
     itemsToCartAdder(toCartButtonsCollection);
     itemsToCartAdder(toCartPopupButtonsCollection);
 
-
+    //Drag&Drop:
+    dragNDrop();
 }
 
 function itemsToCartAdder(collection) {
@@ -214,24 +220,7 @@ function itemsToCartAdder(collection) {
         item.addEventListener('click', () => {
 
             //Create and add items to cart:
-
-            const parent = item.closest('.book'),
-                parentTitle = parent.querySelector('.book-name'),
-                parentAuthor = parent.querySelector('.book-author'),
-                parentPrice = parent.querySelector('.book-price'),
-                parentCoverPath = parent.querySelector('.book-cover');
-
-            const newBookInCart = createCartItem(parentTitle.innerHTML, parentAuthor.innerHTML, parentPrice.innerHTML, parentCoverPath.getAttribute('src'));
-
-            cart.numItemsInCart++;
-            cartElementNum.classList.add('cart-number-vivsible');
-            cartEmpty.classList.add('cart-empty-invisible');
-            cartElementPopupCheckoutButton.classList.add('cart-popup-checkout-button-active');
-
-            cartElementNum.innerHTML = cart.numItemsInCart;
-            setCartTotal(newBookInCart, 'add');
-
-            itemRemover(newBookInCart);
+            createBookForCart(item);
         });
     });
 }
@@ -267,4 +256,191 @@ function setCartTotal(bookInCart, method) {
     }
 
     cartElementPopupTotal.innerHTML = `Items in cart: ${cart.numItemsInCart}<br> Total cost: $${cart.totalCost}.00`;
+}
+
+function dragNDrop() {
+    const booksCoverCollection = document.querySelectorAll('.book-cover');
+
+    cartContainer.ondragover = allowDrop;
+
+    for (let bookCover of booksCoverCollection) {
+        bookCover.ondragstart = dragBook;
+    }
+
+    cartContainer.ondrop = dropToCart;
+}
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function dragBook(event) {
+    event.dataTransfer.setData('id', event.target.id);
+}
+
+function dropToCart(event) {
+    let itemID = event.dataTransfer.getData('id');
+    const bookCover = document.getElementById(itemID);
+
+    createBookForCart(bookCover);
+}
+
+function createBookForCart(element) {
+    const parent = element.closest('.book'),
+        parentTitle = parent.querySelector('.book-name'),
+        parentAuthor = parent.querySelector('.book-author'),
+        parentPrice = parent.querySelector('.book-price'),
+        parentCoverPath = parent.querySelector('.book-cover');
+
+    const newBookInCart = createCartItem(parentTitle.innerHTML, parentAuthor.innerHTML, parentPrice.innerHTML, parentCoverPath.getAttribute('src'));
+
+    cart.numItemsInCart++;
+    cartElementNum.classList.add('cart-number-vivsible');
+    cartEmpty.classList.add('cart-empty-invisible');
+    cartElementPopupCheckoutButton.classList.add('cart-popup-checkout-button-active');
+
+    cartElementNum.innerHTML = cart.numItemsInCart;
+    setCartTotal(newBookInCart, 'add');
+
+    itemRemover(newBookInCart);
+}
+
+function validateData(event) {
+    // Name:
+    if (event.target === orderForm.name) {
+        if (orderForm.name.value.length < 4 || orderForm.name.value.trim().includes(' ') || !(/^[a-zA-ZА-Яа-яЁё]+$/.test(orderForm.name.value.trim()))) {
+            showFieldError('name');
+        } else {
+            acceptFieldData('name');
+        }
+
+        // Surname:
+    } else if (event.target === orderForm.surname) {
+        if (orderForm.surname.value.length < 5 || orderForm.surname.value.trim().includes(' ') || !(/^[a-zA-ZА-Яа-яЁё]+$/.test(orderForm.surname.value.trim()))) {
+            showFieldError('surname');
+        } else {
+            acceptFieldData('surname');
+        }
+
+        // Street:
+    } else if (event.target === orderForm.street) {
+        if (+orderForm.street.value.length < 5) {
+            showFieldError('street');
+        } else {
+            acceptFieldData('street');
+        }
+
+        // House number:
+    } else if (event.target === orderForm['house-number']) {
+        if (+orderForm['house-number'].value < 0 || !(/^\d+$/.test(orderForm['house-number'].value.trim()))) {
+            showFieldError('house-number');
+        } else {
+            acceptFieldData('house-number');
+        }
+
+        // Flat number:
+    } else if (event.target === orderForm['flat-number']) {
+        if (orderForm['flat-number'].value.trim()[0] === '-' || !(/^[0-9-]+$/.test(orderForm['flat-number'].value.trim()))) {
+            showFieldError('flat-number');
+        } else {
+            acceptFieldData('flat-number');
+        }
+
+        /* Delivery date */
+    } else if (event.target === orderForm['delivery-date']) {
+        const currentDate = new Date(),
+            orderDate = new Date(event.target.value);
+
+        if (orderDate <= currentDate || event.target.value === '') {
+            showFieldError('delivery-date');
+        } else {
+            acceptFieldData('delivery-date');
+        }
+    }
+}
+
+function checkGift(event) {
+    const giftsCollection = orderForm.querySelectorAll('.checkbox');
+
+    for (let gift of giftsCollection) {
+        if (event.target === gift) {
+            if (gift.checked) {
+                result['gifts'].push(gift.nextElementSibling.innerHTML);
+                giftCount++;
+                if (giftCount >= 2) {
+                    for (let gift of giftsCollection) {
+                        if (!gift.checked) {
+                            gift.disabled = true;
+                        }
+                    }
+                }
+            } else {
+                const arr = result['gifts'].filter((item) => {
+                    return (item !== gift.nextElementSibling.innerHTML);
+                });
+                result['gifts'] = arr;
+                giftCount--;
+                for (let gift of giftsCollection) {
+                    if (!gift.checked) {
+                        gift.disabled = false;
+                    }
+                }
+            }
+        }
+    }
+}
+
+function unlockSubmit(obj) {
+    const submitBtn = document.querySelector('.form-submit');
+    let isDataValid = true;
+
+    for (let key in result) {
+        if (result[key] === '') {
+            isDataValid = false
+        }
+    }
+
+    if (isDataValid) {
+        submitBtn.disabled = false;
+        submitBtn.classList.add('form-submit-active');
+    } else {
+        submitBtn.classList.remove('form-submit-active');
+    }
+}
+
+function generateResultTable() {
+    const tdNameValue = document.querySelector('.td-name-value'),
+        tdSurnameValue = document.querySelector('.td-surname-value'),
+        tdStreetValue = document.querySelector('.td-street-value'),
+        tdHouseNumber = document.querySelector('.td-house-number-value'),
+        tdFlatNumber = document.querySelector('.td-flat-number-value'),
+        tdDeliveryTypeValue = document.querySelector('.td-delivery-date-value'),
+        tdPaymentTypeValue = document.querySelector('.td-payment-type-value'),
+        tdGiftsValue = document.querySelector('.td-gifts-value');
+
+    tdNameValue.innerHTML = result['name'];
+    tdSurnameValue.innerHTML = result['surname'];
+    tdStreetValue.innerHTML = result['street'];
+    tdHouseNumber.innerHTML = result['house-number'];
+    tdFlatNumber.innerHTML = result['flat-number'];
+    tdDeliveryTypeValue.innerHTML = result['delivery-date'];
+    tdPaymentTypeValue.innerHTML = result['payment-type'];
+    if (result['gifts'].length === 2) {
+        tdGiftsValue.innerHTML = `${result['gifts'][0]}, ${result['gifts'][1]}`;
+    } else {
+        tdGiftsValue.innerHTML = result['gifts'];
+    }
+}
+
+function showFieldError(formFieldName) {
+    orderForm[formFieldName].classList.add('field-error');
+    result[formFieldName] = '';
+    orderForm.querySelector(`.${formFieldName}-container`).classList.add('container-error');
+}
+
+function acceptFieldData(formFieldName) {
+    result[formFieldName] = orderForm[formFieldName].value;
+    orderForm[formFieldName].classList.remove('field-error');
+    orderForm.querySelector(`.${formFieldName}-container`).classList.remove('container-error');
+    unlockSubmit(result);
 }

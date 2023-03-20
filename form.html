@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshop Order Form</title>
-    <link rel="shortcut icon" href="/assets/icons/bookIcon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/icons/bookIcon.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arimo:ital@0;1&family=Gelasio:ital@0;1&display=swap"
@@ -23,35 +23,47 @@
                     <fieldset class="form-fieldset">
                         <legend class="form-legend">Order Form</legend>
 
-                        <label for="name" class="form-label field-label name-field-label">Name:</label>
-                        <input type="text" id="name" name="name" class="name-field field"><br>
+                        <div class="name-container">
+                            <label for="name" class="form-label field-label name-field-label">Name:</label>
+                            <input type="text" id="name" name="name" class="name-field field"><br>
+                        </div>
 
-                        <label for="surname" class="form-label field-label surname-field-label">Surname:</label>
-                        <input type="text" id="surname" name="surname" class="surname-field field"><br>
+                        <div class="surname-container">
+                            <label for="surname" class="form-label field-label surname-field-label">Surname:</label>
+                            <input type="text" id="surname" name="surname" class="surname-field field"><br>
+                        </div>
 
-                        <label for="street" class="form-label field-label street-field-label">Street:</label>
-                        <input type="text" id="street" name="street" class="street-field field"><br>
+                        <div class="street-container">
+                            <label for="street" class="form-label field-label street-field-label">Street:</label>
+                            <input type="text" id="street" name="street" class="street-field field"><br>
+                        </div>
 
-                        <label for="house-number" class="form-label field-label house-number-field-label">House
-                            number:</label>
-                        <input type="text" id="house-number" name="house-number" required
-                            class="house-number-field field"><br>
+                        <div class="house-number-container">
+                            <label for="house-number" class="form-label field-label house-number-field-label">House
+                                number:</label>
+                            <input type="text" id="house-number" name="house-number" required
+                                class="house-number-field field"><br>
+                        </div>
 
-                        <label for="flat-number" class="form-label field-label flat-number-field-label">Flat
-                            number:</label>
-                        <input type="text" id="flat-number" name="flat-number" required
-                            class="flat-number-field field"><br>
+                        <div class="flat-number-container">
+                            <label for="flat-number" class="form-label field-label flat-number-field-label">Flat
+                                number:</label>
+                            <input type="text" id="flat-number" name="flat-number" required
+                                class="flat-number-field field"><br>
+                        </div>
 
-                        <label for="delivery-date" class="form-label field-label delivery-date-label">Delivery
-                            date:</label>
-                        <input type="date" id="delivery-date" name="delivery-date" required
-                            class="delivery-date field"><br>
+                        <div class="delivery-date-container">
+                            <label for="delivery-date" class="form-label field-label delivery-date-label">Delivery
+                                date:</label>
+                            <input type="date" id="delivery-date" name="delivery-date" required
+                                class="delivery-date field"><br>
+                        </div>
 
-                        <label for="payment-method" class="form-label payment-method-label">Payment type:</label><br>
-                        <input type="radio" id="cash-radio" name="payment-method" value="cash" required
+                        <label for="payment-type" class="form-label payment-type-label">Payment type:</label><br>
+                        <input type="radio" id="cash-radio" name="payment-type" value="cash" required
                             class="cash-radio" checked>
                         <label for="cash" class="radio-label cash-radio-label">Cash</label><br>
-                        <input type="radio" id="card-radio" name="payment-method" value="card" required
+                        <input type="radio" id="card-radio" name="payment-type" value="card" required
                             class="card-radio">
                         <label for="card" class="radio-label card-radio-label">Card</label><br>
 
@@ -61,8 +73,7 @@
                         <input type="checkbox" id="checkbox2" name="checkbox2" value="2" class="checkbox">
                         <label for="checkbox2" class="form-label checkbox-label">Add postcard</label><br>
                         <input type="checkbox" id="checkbox3" name="checkbox3" value="3" class="checkbox">
-                        <label for="checkbox3" class="form-label checkbox-label">Provide 2% discount to the next
-                            time</label><br>
+                        <label for="checkbox3" class="form-label checkbox-label">Provide 2% discount to the next time</label><br>
                         <input type="checkbox" id="checkbox4" name="checkbox4" value="4" class="checkbox">
                         <label for="checkbox4" class="form-label checkbox-label">Branded pen</label><br>
 
@@ -71,8 +82,44 @@
                 </form>
                 <div class="result-popup">
                     <div class="result-popup-container">
-                        <h2 class="result-popup-title">Your order is complete.</h2>
-                        <p class="result-popup-data"></p>
+                        <h2 class="result-popup-title">Your order has been confirmed!</h2>
+                        <div class="result-popup-data">
+                            <table class="result-popup-data-table">
+                                <caption class="result-popup-data-table-title">Order information:</caption>
+                                <tr class="row">
+                                    <td class="td-name">Name:</td>
+                                    <td class="td-name-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-surname">Surname</td>
+                                    <td class="td-surname-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-street">Street:</td>
+                                    <td class="td-street-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-house-number">House number:</td>
+                                    <td class="td-house-number-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-flat-number">Flat number:</td>
+                                    <td class="td-flat-number-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-delivery-date">Delivery date:</td>
+                                    <td class="td-delivery-date-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-payment-type">Payment type:</td>
+                                    <td class="td-payment-type-value td-value">Value</td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="td-gits">Gifts:</td>
+                                    <td class="td-gifts-value td-value">Value</td>
+                                </tr>
+                            </table>
+                        </div>
                         <a href="/index.html" class="result-popup-home-link">HOME</a>
                     </div>
                 </div>

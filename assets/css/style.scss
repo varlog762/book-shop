@@ -12,12 +12,20 @@ sans-serif;
 }
 
 .main-content {
+    position: relative;
 
     .user-account {
+        position: fixed;
+        top: 57px;
+        left: 0;
+        width: 100%;
+        z-index: 2;
+        background-color: #FFF;
 
         .user-account-container {
             display: flex;
             justify-content: space-between;
+            padding: 0 20px;
 
             .user-account-logo {
                 margin: 18px 0;
@@ -121,7 +129,7 @@ sans-serif;
                 .cart-popup {
                     display: none;
                     position: fixed;
-                    z-index: 1;
+                    z-index: 99;
                     left: 0;
                     top: 0;
                     width: 100%;
@@ -337,7 +345,7 @@ sans-serif;
     }
 
     .new-books {
-        padding: 70px 12px;
+        padding: 70px 20px;
         background-color: #FCECEC;
 
         .new-books-description {
@@ -491,7 +499,7 @@ sans-serif;
                 .book-popup {
                     display: none;
                     position: fixed;
-                    z-index: 1;
+                    z-index: 99;
                     left: 0;
                     top: 0;
                     width: 100%;

@@ -10,7 +10,7 @@ const userAccountContainer = createAndInsertElement('div', 'user-account-contain
 
 const userAccountLogo = createAndInsertElement('div', 'user-account-logo', userAccountContainer, 'append');
 const userAccountMenu = createAndInsertElement('nav', 'user-account-menu', userAccountContainer, 'append');
-const userAccountTools = createAndInsertElement('div', 'cart-container', userAccountContainer, 'append');
+const cartContainer = createAndInsertElement('div', 'cart-container', userAccountContainer, 'append');
 
 //User Menu:
 

@@ -22,26 +22,29 @@ const cart = {
  * @returns {newElem} - Object of the new element.
  */
 function createAndInsertElement(html, className, parentElement, insertMethod, value = '') {
-    const newElem = document.createElement(html);
+    const newElem = document.createElement(html),
+        newFragment = document.createDocumentFragment();
 
     newElem.classList.add(className);
     newElem.innerHTML = value;
 
+    newFragment.append(newElem);
+
     switch (insertMethod) {
         case 'append':
-            parentElement.append(newElem);
+            parentElement.append(newFragment);
             break;
         case 'prepend':
-            parentElement.prepend(newElem);
+            parentElement.prepend(newFragment);
             break;
         case 'before':
-            parentElement.before(newElem);
+            parentElement.before(newFragment);
             break;
         case 'after':
-            parentElement.after(newElem);
+            parentElement.after(newFragment);
             break;
         case 'replaceWith':
-            parentElement.replaceWith(newElem);
+            parentElement.replaceWith(newFragment);
             break;
     }
 
